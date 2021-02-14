@@ -8,7 +8,7 @@ import java.util.Map;
 public class MaxLevelSumOfBinaryTree {
     public int maxLevelSum(TreeNode root) {
         Map<Integer, Integer> levelToSum = new HashMap<>();
-        traverse(levelToSum, root, 0);
+        traverse(levelToSum, root, 1);
         return getMaxLevel(levelToSum);
     }
 

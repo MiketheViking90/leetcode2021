@@ -24,8 +24,8 @@ public class CloneGraph {
         Node copy = new Node(val);
         intToNode.put(val, copy);
 
-        for (Node n : node.neighbors) {
-            copy.neighbors.add(deepCopy(n));
+        for (Node n : node.children) {
+            copy.children.add(deepCopy(n));
         }
         return copy;
     }

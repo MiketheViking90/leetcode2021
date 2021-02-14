@@ -4,29 +4,29 @@ import java.util.*;
 
 public class Node {
     public int val;
-    public List<Node> neighbors;
+    public List<Node> children;
 
     public Node() {
         val = 0;
-        neighbors = new ArrayList<>();
+        children = new ArrayList<>();
     }
 
     public Node(int _val) {
         val = _val;
-        neighbors = new ArrayList<>();
+        children = new ArrayList<>();
     }
 
     public Node(int _val, List<Node> _neighbors) {
         val = _val;
-        neighbors = _neighbors;
+        children = _neighbors;
     }
 
     public void addNeighbor(Node neighbor) {
-        this.neighbors.add(neighbor);
+        this.children.add(neighbor);
     }
 
     public String toString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         Set<Node> visited = new HashSet<>();
         Queue<Node> toVisit = new LinkedList<>();
@@ -37,7 +37,8 @@ public class Node {
             while (levelSize-- > 0) {
                 Node visit = toVisit.poll();
 
-                for (Node n : visit.neighbors) {
+                assert visit != null;
+                for (Node n : visit.children) {
                     toVisit.offer(n);
                 }
 

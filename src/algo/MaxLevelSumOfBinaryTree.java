@@ -26,7 +26,7 @@ public class MaxLevelSumOfBinaryTree {
 
     private int getMaxLevel(Map<Integer, Integer> levelToValues) {
         int maxLevel = -1;
-        int maxLevelSum = -1;
+        int maxLevelSum = Integer.MIN_VALUE;
 
         for (Map.Entry<Integer, Integer> entry : levelToValues.entrySet()) {
             int level = entry.getKey();

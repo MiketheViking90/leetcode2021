@@ -28,7 +28,6 @@ public class Node {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        Set<Node> visited = new HashSet<>();
         Queue<Node> toVisit = new LinkedList<>();
         toVisit.offer(this);
 

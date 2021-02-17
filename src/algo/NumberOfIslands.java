@@ -1,4 +1,4 @@
-package datastructures;
+package algo;
 
 public class NumberOfIslands {
     public int numIslands(char[][] grid) {

@@ -4,40 +4,47 @@ import java.util.*;
 
 public class ReconstructItinerary {
     public List<String> findItinerary(List<List<String>> tickets) {
-        Map<String, List<String>> stubs = new HashMap<>();
+        Map<String, List<String>> flights = new HashMap<>();
         for (List<String> ticket : tickets) {
             String src = ticket.get(0);
             String des = ticket.get(1);
 
-            List<String> curStub = stubs.getOrDefault(src, new ArrayList<>());
-            curStub.add(des);
-            Collections.sort(curStub);
-            stubs.put(src, curStub);
+            List<String> outgoing = flights.getOrDefault(src, new LinkedList<>());
+            outgoing.add(des);
+            Collections.sort(outgoing);
+            flights.put(src, outgoing);
         }
 
-
-        List<String> itin = new ArrayList<>();
-        dfs("JFK", itin, stubs);
-        return itin;
+        List<String> itinerary = new ArrayList<>();
+        traverse(itinerary, flights, "JFK");
+        return  itinerary;
     }
 
-    private void dfs(String airport, List<String> itin, Map<String, List<String>> stubs) {
-        itin.add(airport);
-        List<String> destinations = stubs.get(airport);
+    private void traverse(List<String> itinerary, Map<String, List<String>> flights, String airport) {
+        itinerary.add(airport);
+        if (flights.isEmpty()) {
+            return;
+        }
+        if (!flights.containsKey(airport)) {
+            return;
+        }
 
-        for (String des : destinations) {
-            dfs(des, itin, stubs);
+        List<String> dests = flights.get(airport);
+        while(!dests.isEmpty()) {
+            String next = dests.get(0);
+            dests.remove(0);
+            flights.remove(airport);
+            traverse(itinerary, flights, next);
         }
     }
+
 
     public static void main(String[] args) {
         ReconstructItinerary ri = new ReconstructItinerary();
         List<List<String>> itin = new ArrayList<>();
-        itin.add(List.of("JFK", "SFO"));
-        itin.add(List.of("JFK", "ATL"));
-        itin.add(List.of("SFO", "ATL"));
-        itin.add(List.of("ATL", "JFK"));
-        itin.add(List.of("ATL", "SFO"));
+        itin.add(List.of("JFK", "KUL"));
+        itin.add(List.of("JFK", "NRT"));
+        itin.add(List.of("NRT", "JFK"));
 
         List<String> trip = ri.findItinerary(itin);
         System.out.println(trip);

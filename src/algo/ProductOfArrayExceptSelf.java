@@ -10,31 +10,27 @@ public class ProductOfArrayExceptSelf {
         int[] rProds = new int[N];
 
         int prod = 1;
-        lProds[0] = 1;
+        lProds[0] = prod;
         for (int i = 1; i < N; i++) {
             int n = nums[i-1];
-            prod *= n;
-            lProds[i] = prod;
+            lProds[i] = n * lProds[i-1];
         }
 
-        prod = 1;
         rProds[N-1] = 1;
         for (int i = N-2; i >= 0 ; i--) {
             int n = nums[i+1];
-            prod *= n;
-            rProds[i] = prod;
+            rProds[i] = n * rProds[i+1];
         }
 
-        int[] products = new int[N];
+        int[] prods = new int[N];
         for (int i = 0; i < N; i++) {
-            prod = lProds[i] * rProds[i];
-            products[i] = prod;
+            prods[i] = lProds[i] * rProds[i];
         }
-        return products;
+        return prods;
     }
 
     public static void main(String[] args) {
-        int[] nums = {1,0,3,4,5};
+        int[] nums = {1,3,4,5};
         int[] products = productExceptSelf(nums);
         System.out.println(Arrays.toString(products));
     }

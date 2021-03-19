@@ -7,26 +7,29 @@ public class TrappingRainWater {
         int[] rightMax = new int[N];
 
         int rMax = 0;
-        for (int i = N-1; i >= 0; i--) {
-            rightMax[i] = rMax;
+        for (int i = N-2; i >= 0; i--) {
             rMax = Math.max(rMax, height[i]);
+            rightMax[i] = rMax;
         }
 
         int lMax = 0;
-        for (int i = 0; i < N; i++) {
-            leftMax[i] = lMax;
+        for (int i = 1; i < N-1; i++) {
             lMax = Math.max(lMax, height[i]);
+            leftMax[i] = lMax;
         }
 
-        int[] water = new int[N];
-        for (int i = 0; i < N; i++) {
-            int h = Math.min(leftMax[i], rightMax[i]);
-            water[i] = h - height[i];
-        }
         int sum = 0;
-        for (int diff : water) {
-            sum += diff;
+        for (int i = 1; i < N-1; i++) {
+            int h = Math.min(leftMax[i], rightMax[i]);
+            sum += (h - height[i]);
         }
         return sum;
+    }
+
+    public static void main(String[] args) {
+        int[] heights = {0,1,0,2,1,0,1,3,2,1,2,1};
+        TrappingRainWater trw = new TrappingRainWater();
+        int sum = trw.trap(heights);
+        System.out.println(sum);
     }
 }

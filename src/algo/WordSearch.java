@@ -42,4 +42,49 @@ public class WordSearch {
         seen[x][y] = false;
         return found;
     }
+
+    public boolean exist1(char[][] board, String word) {
+        int r = board.length;
+        int c = board[0].length;
+
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                if (board[i][j] == word.charAt(0)) {
+                    boolean[][] visited = new boolean[r][c];
+                    if (search(board, i, j, word, 0, visited)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean search(char[][] board, int x, int y, String word, int idx, boolean[][] visited) {
+        if (idx == word.length()) {
+            return true;
+        }
+
+        int r = board.length;
+        int c = board[0].length;
+
+        if (x < 0 || x >= r || y < 0 || y >= c) {
+            return false;
+        }
+        if (visited[x][y]) {
+            return false;
+        }
+
+        if (board[x][y] != word.charAt(idx)) {
+            return false;
+        }
+
+        visited[x][y] = true;
+        boolean found = search(board, x+1, y, word, idx+1, visited) ||
+                search(board, x-1, y, word, idx+1, visited) ||
+                search(board, x, y+1, word, idx+1, visited) ||
+                search(board, x, y-1, word, idx+1, visited);
+        visited[x][y] = false;
+        return found;
+    }
 }

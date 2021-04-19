@@ -42,9 +42,29 @@ public class LetterCombosOfPhoneNumber {
         }
     }
 
+    public List<String> letterCombinations1(String digits) {
+        List<String> combos = new ArrayList<>();
+        dfs1("", 0, combos, digits);
+        return combos;
+    }
+
+    private void dfs1(String combo, int idx, List<String> combos, String digits) {
+        if (idx == digits.length()) {
+            combos.add(combo);
+            return;
+        }
+
+        char digit = digits.charAt(idx);
+        List<Character> chars = digitToChars.get(digit);
+        for (Character c : chars) {
+            String next = combo + c;
+            dfs1(next, idx+1, combos, digits);
+        }
+    }
+
     public static void main(String[] args) {
         LetterCombosOfPhoneNumber lcpn = new LetterCombosOfPhoneNumber();
-        List<String> words = lcpn.letterCombinations("7346279");
+        List<String> words = lcpn.letterCombinations1("7346279");
         System.out.println(words);
     }
 }
